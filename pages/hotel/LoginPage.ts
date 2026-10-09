@@ -1,15 +1,18 @@
 import type { Locator, Page } from '@playwright/test';
 
 export class LoginPage {
+  readonly form: Locator;
   readonly email: Locator;
   readonly password: Locator;
   readonly submit: Locator;
 
   constructor(private readonly page: Page) {
-    this.email = page.getByLabel('メールアドレス');
-    this.password = page.getByLabel('パスワード');
-    // ナビゲーションの「ログイン」はリンクなので、role で区別できる
-    this.submit = page.getByRole('button', { name: 'ログイン' });
+    // ナビゲーションの「ログイン」リンクも role="button" を持つため、
+    // ログインフォームの中に範囲を絞って特定する
+    this.form = page.locator('#login-form');
+    this.email = this.form.getByLabel('メールアドレス');
+    this.password = this.form.getByLabel('パスワード');
+    this.submit = this.form.getByRole('button', { name: 'ログイン' });
   }
 
   async goto() {
