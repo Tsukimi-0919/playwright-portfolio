@@ -1,0 +1,25 @@
+{
+  "name": "playwright-portfolio",
+  "version": "1.0.0",
+  "description": "Playwright によるE2Eテストの学習ポートフォリオ",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:hotel": "playwright test --project=hotel",
+    "test:todomvc": "playwright test --project=todomvc",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^26.6.4",
+    "typescript": "^7.0.2"
+  }
+}
