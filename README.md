@@ -1,12 +1,12 @@
 # Playwright Portfolio
 
-![Playwright Tests](https://github.com/<YOUR_GITHUB_ID>/playwright-portfolio/actions/workflows/playwright.yml/badge.svg)
+![Playwright Tests](https://github.com/Tsukimi-0919/playwright-portfolio/actions/workflows/playwright.yml/badge.svg)
 
 Playwright（TypeScript）による E2E テストの学習ポートフォリオです。
 QA エンジニアとして「何を・なぜ自動化するか」を設計し、実装・CI 運用までを一通り行っています。
 
 - 📄 テスト戦略・観点表：[docs/test-strategy.md](docs/test-strategy.md)
-- 📊 最新のテストレポート：https://<YOUR_GITHUB_ID>.github.io/playwright-portfolio/
+- 📊 最新のテストレポート：https://Tsukimi-0919.github.io/playwright-portfolio/
 
 ## テスト対象
 
