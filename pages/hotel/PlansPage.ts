@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import { expect, type Page } from '@playwright/test';
 import { ReservePage } from './ReservePage';
 
 export class PlansPage {
@@ -15,12 +15,15 @@ export class PlansPage {
   async reserve(planName: string): Promise<ReservePage> {
     const card = this.page
       .locator('.card')
-      .filter({ has: this.page.getByRole('heading', { name: planName }) });
+      .filter({ has: this.page.getByRole('heading', { name: planName, exact: true }) });
 
     const popupPromise = this.page.waitForEvent('popup');
     await card.getByRole('link', { name: 'このプランで予約' }).click();
     const popup = await popupPromise;
-    await popup.waitForLoadState();
-    return new ReservePage(popup);
+    const reservePage = new ReservePage(popup);
+    // プラン情報は非同期で読み込まれ、読み込み後に宿泊数・人数の初期値と上限・下限が設定される。
+    // 読み込み完了の合図として「予約内容を確認する」ボタンが押せるようになるまで待つ。
+    await expect(reservePage.submit).toBeEnabled();
+    return reservePage;
   }
 }
