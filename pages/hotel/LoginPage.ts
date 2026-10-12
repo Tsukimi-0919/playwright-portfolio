@@ -4,6 +4,8 @@ export class LoginPage {
   readonly form: Locator;
   readonly email: Locator;
   readonly password: Locator;
+  readonly emailError: Locator;
+  readonly passwordError: Locator;
   readonly submit: Locator;
 
   constructor(private readonly page: Page) {
@@ -13,6 +15,8 @@ export class LoginPage {
     this.email = this.form.getByLabel('メールアドレス');
     this.password = this.form.getByLabel('パスワード');
     this.submit = this.form.getByRole('button', { name: 'ログイン' });
+    this.emailError = page.locator('#email-message');
+    this.passwordError = page.locator('#password-message');
   }
 
   async goto() {
