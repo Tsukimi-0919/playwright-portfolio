@@ -7,21 +7,25 @@ export type ContactMethod = 'no' | 'email' | 'tel';
 export class ReservePage {
   readonly planName: Locator;
   readonly date: Locator;
+  readonly dateError: Locator;
   readonly term: Locator;
   readonly termError: Locator;
   readonly headCount: Locator;
   readonly headCountError: Locator;
   readonly addOns: Record<AddOn, Locator>;
   readonly username: Locator;
+  readonly usernameError: Locator;
   readonly contact: Locator;
   readonly email: Locator;
   readonly tel: Locator;
+  readonly comment: Locator;
   readonly totalBill: Locator;
   readonly submit: Locator;
 
   constructor(readonly page: Page) {
     this.planName = page.locator('#plan-name');
     this.date = page.getByLabel('宿泊日');
+    this.dateError = page.locator('#date ~ .invalid-feedback');
     this.term = page.getByLabel('宿泊数');
     this.termError = page.locator('#term ~ .invalid-feedback');
     this.headCount = page.getByLabel('人数');
@@ -32,9 +36,11 @@ export class ReservePage {
       観光: page.getByLabel('お得な観光プラン'),
     };
     this.username = page.getByLabel('氏名');
+    this.usernameError = page.locator('#username ~ .invalid-feedback');
     this.contact = page.getByLabel('確認のご連絡');
     this.email = page.getByLabel('メールアドレス');
     this.tel = page.getByLabel('電話番号');
+    this.comment = page.getByLabel('ご要望・ご連絡事項等ありましたらご記入ください');
     this.totalBill = page.locator('#total-bill');
     this.submit = page.getByRole('button', { name: '予約内容を確認する' });
   }
@@ -52,6 +58,12 @@ export class ReservePage {
   async setDate(value: string) {
     await this.date.fill(value);
     await this.date.press('Tab');
+  }
+
+  /** 入力欄を空にしてフォーカスを外す */
+  async clear(field: Locator) {
+    await field.fill('');
+    await field.press('Tab');
   }
 
   async setTerm(value: number) {

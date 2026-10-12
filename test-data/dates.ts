@@ -37,3 +37,10 @@ export function formatForInput(date: Date): string {
   const d = String(date.getUTCDate()).padStart(2, '0');
   return `${y}/${m}/${d}`;
 }
+
+/** 今日（日本時間）から n 日後の日付を返す（0 なら今日） */
+export function daysFromToday(n: number): Date {
+  const date = todayInTokyo();
+  date.setUTCDate(date.getUTCDate() + n);
+  return date;
+}
