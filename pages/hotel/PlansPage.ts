@@ -1,11 +1,26 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 import { ReservePage } from './ReservePage';
 
 export class PlansPage {
-  constructor(private readonly page: Page) {}
+  /** プランカードの見出し（プラン名） */
+  readonly planNames: Locator;
+  /** プラン読み込み中のスピナー */
+  readonly loading: Locator;
+
+  constructor(private readonly page: Page) {
+    this.planNames = page.locator('.card').getByRole('heading', { level: 5 });
+    this.loading = page.getByRole('status');
+  }
 
   async goto() {
     await this.page.goto('plans.html');
+    // おすすめ以外のプランは後から非同期で読み込まれるため、読み込みが終わるまで待つ
+    await expect(this.loading).toBeHidden();
+  }
+
+  /** 表示されているプラン名の一覧 */
+  async visiblePlanNames(): Promise<string[]> {
+    return (await this.planNames.allTextContents()).map((name) => name.trim());
   }
 
   /**
